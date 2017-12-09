@@ -1,0 +1,22 @@
+version: "2"
+
+
+services:
+
+  aap:
+    build: ./aap
+    image: elfrinjo/aap:latest
+
+  prosody:
+    build: ./prosody
+    image: elfrinjo/prosody:latest
+
+  tinywebdav:
+    build: ./tinywebdav
+    image: elfrinjo/tinywebdav:latest
+
+  torrelay:
+    build: ./torrelay
+    image: elfrinjo/torrelay:latest
+
+
