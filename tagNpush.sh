@@ -10,7 +10,7 @@ do
 	echo
 	echo "======= $i ======="
 	basename=$(echo $i | cut -d: -f1)
-	echo docker tag $basename $basename:$datestamp
-	echo docker push $i
-	echo docker push $basename:$datestamp
+	docker tag $basename $basename:$datestamp
+	docker push $i
+	docker push $basename:$datestamp
 done
