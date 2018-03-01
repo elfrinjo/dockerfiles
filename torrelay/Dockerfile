@@ -7,7 +7,9 @@ COPY ./assets/torrc.relay /etc/tor/torrc.relay
 COPY ./assets/entrypoint.sh /etc/tor/entrypoint.sh
 
 RUN chown -R tor /etc/tor \
-    && chmod 755 /etc/tor/entrypoint.sh
+    && chmod 755 /etc/tor/entrypoint.sh \
+	&& mkdir /var/run/tor \
+	&& chown tor /var/run/tor
 
 ENV TOR_NICK="Landesverrat" \
     TOR_CONTACT="Not Provided" \
