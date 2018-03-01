@@ -13,6 +13,7 @@ RUN apk add --update --no-cache \
         php7-ctype \
         php7-dom \
         php7-exif \
+        php7-fileinfo \
         php7-gd \
         php7-gmp \
         php7-json \
