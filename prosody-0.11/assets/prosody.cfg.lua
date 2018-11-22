@@ -88,6 +88,7 @@ modules_enabled = {
         "csi";
         "mam";
         "privacy_lists";
+		"profile";
         "smacks";
         "smacks_offline";
         "http_upload";
