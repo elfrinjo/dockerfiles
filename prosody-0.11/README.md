@@ -30,7 +30,6 @@ $ docker run -d \
     --restart always \
     --name prosody \
     -v /etc/localtime:/etc/localtime:ro \
-    -v prosody-acme:/usr/local/etc/prosody/certs:ro \
     -v prosody-cfg:/usr/local/etc/prosody:ro \
     -v prosody-data:/usr/local/var/lib/prosody \
     elfrinjo/prosody
@@ -44,16 +43,28 @@ $ docker exec -ti prosody bash
 
 To Create a certificate for you host:
 ```console
-docker run --rm  -it \
+$ docker pull neilpang/acme.sh
+$ docker run --rm  -it \
     --volume prosody-acme:/acme.sh \
     --net=host \
-    neilpang/acme.sh --issue  -d example.com -d conference.example.com --standalone
+    neilpang/acme.sh --issue  \
+                      -d example.com \
+                      -d conference.example.com \
+                     --standalone
 ```
 
 To renew the certificate:
 ```console
-docker run --rm  -it \
+$ docker pull neilpang/acme.sh
+$ docker run --rm  -it \
     --volume prosody-acme:/acme.sh \
     --net=host \
     neilpang/acme.sh --cron --standalone
+$ docker run --rm \
+    -v prosody-acme:/acme.sh \
+    -v prosody-cfg:/target \
+    neilpang/acme.sh --install-cert \
+                      -d example.com \
+                     --key-file /target/certs/example.com/example.com.key \
+                     --fullchain-file /target/certs/example.com/fullchain.cer
 ```
