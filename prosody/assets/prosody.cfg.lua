@@ -11,6 +11,13 @@
 
 daemonize = false
 
+-- Interfaces to listen on
+-- We are setting the ifaces to only listen on IPv4 addresses
+interfaces = "*"
+component_interface = "*"
+local_interfaces = "127.0.0.1"
+
+
 ---------- Server-wide settings ----------
 -- Settings in this section apply to the whole server and are the default settings
 -- for any virtual hosts
@@ -75,17 +82,17 @@ modules_enabled = {
 
 	-- Community Modules
 		"admin_blocklist";
-		"blocking";
-		"carbons";
-		"csi";
-		"mam";
-		"privacy_lists";
-		"smacks";
-		"http_upload";
-		-- The following module enables push notifications for Android and iOS.
-		-- Most likely, you want to enable this. However, it is disabled by
-		-- default, as it involves a third party server.
-		--"cloud_notify";
+        "blocking";
+        "carbons";
+        "cloud_notify";
+        "csi";
+        "mam";
+        "privacy_lists";
+        "pep_vcard_avatar";
+        "smacks";
+        "smacks_offline";
+        "http_upload";
+        "omemo_all_access";
 };
 
 -- These modules are auto-loaded, but should you want
@@ -152,12 +159,6 @@ storage = {
     muc_log = "xmlarchive";
 }
 
--- For the "sql" backend, you can uncomment *one* of the below to configure:
---sql = { driver = "SQLite3", database = "prosody.sqlite" } -- Default. 'database' is the filename.
---sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
---sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
-
-
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
 log = {
@@ -180,6 +181,11 @@ archive_expires_after = "2m"
 --        certificate = "certs/fullchain.cer";
 --}
 
+-- Logging for MUCs
+muc_log_by_default = true; -- Enable logging by default (can be disabled in room config)
+muc_log_all_rooms = false; -- set to true to force logging of all rooms
+max_history_messages = 20;
+
 
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
@@ -195,12 +201,18 @@ VirtualHost "example.com"
 Component "conference.example.com" "muc"
 	modules_enabled = {
 		"mam_muc";
+		"remote_roster";
 	}
 
---Component "con@example.com" "admin_message"
+-- Administration by XMPP messages
+Component "con@example.com" "admin_message"
 
--- Set up a SOCKS5 bytestream proxy for server-proxied file transfers:
---Component "proxy.example.com" "proxy65"
+-- Set up a bytestream proxy for server-proxied file transfers:
+Component "proxy65.example.com" "proxy65"
+	proxy65_acl = {
+		'example.com',
+    };
+
 
 ---Set up an external component (default component port is 5347)
 --
