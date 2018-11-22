@@ -7,9 +7,9 @@ services:
     build: ./aap
     image: elfrinjo/aap:latest
 
-  prosody:
-    build: ./prosody
-    image: elfrinjo/prosody:latest
+  prosody-0.11:
+    build: ./prosody-0.11
+    image: elfrinjo/prosody-0.11:latest
 
   tinywebdav:
     build: ./tinywebdav
