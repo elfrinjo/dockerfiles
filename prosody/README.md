@@ -1,6 +1,6 @@
 # Prosody Docker image
 
-Create an image for running prosody XMPP server version 0.10
+Create an image for running prosody XMPP server version 0.11
 http://prosody.im/ on Alpine Linux.
 
 HINT: This is not an official image. Builds might not happen regularly.
@@ -22,6 +22,7 @@ certificates.
 Do not forget to customize your configuration!
 ```console
 $ docker run -d \
+    -p 5000:5000 \
     -p 5222:5222 \
     -p 5269:5269 \
     -p 5280:5280 \

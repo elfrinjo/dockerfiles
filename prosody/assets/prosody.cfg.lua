@@ -88,11 +88,9 @@ modules_enabled = {
         "csi";
         "mam";
         "privacy_lists";
-        "pep_vcard_avatar";
         "smacks";
         "smacks_offline";
         "http_upload";
-        "omemo_all_access";
 };
 
 -- These modules are auto-loaded, but should you want
@@ -200,7 +198,7 @@ VirtualHost "example.com"
 ---Set up a MUC (multi-user chat) room server on conference.example.com:
 Component "conference.example.com" "muc"
 	modules_enabled = {
-		"mam_muc";
+		"muc_mam";
 		"remote_roster";
 	}
 
