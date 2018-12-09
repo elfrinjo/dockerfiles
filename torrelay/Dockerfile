@@ -1,7 +1,7 @@
-FROM alpine:edge
+FROM alpine:latest
 LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
 
-RUN apk --no-cache add tor
+RUN apk --update --no-cache add tor
 
 COPY ./assets/torrc.relay /etc/tor/torrc.relay
 COPY ./assets/entrypoint.sh /etc/tor/entrypoint.sh
