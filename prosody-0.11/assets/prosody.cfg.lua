@@ -49,11 +49,8 @@ modules_enabled = {
 
 	-- Not essential, but recommended
 		"private"; -- Private XML storage (for room bookmarks, etc.)
-		"vcard"; -- Allow users to set vCards
-
-	-- These are commented by default as they have a performance impact
-		--"privacy"; -- Support privacy lists
-		--"compression"; -- Stream compression
+		"vcard4";
+		"vcard_legacy";
 
 	-- Nice to have
 		"version"; -- Replies to server version requests
@@ -88,7 +85,6 @@ modules_enabled = {
         "csi";
         "mam";
         "privacy_lists";
-		"profile";
         "smacks";
         "smacks_offline";
         "http_upload";
