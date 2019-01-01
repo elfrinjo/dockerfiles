@@ -15,30 +15,42 @@ RUN apk add --no-cache \
 
 ## Install build envirnoment, build and remove unneeded things
 ## This is done in one step to reduce image size
-RUN apk add --update \
-            --no-cache \
-            --virtual .build-deps \
-            alpine-sdk \
-            mercurial \
-			libidn-dev \
-            linux-headers \
-            lua5.2-busted \
-            lua5.2-dev \
-            openssl-dev \
-    && set -x \
+RUN set -x \
+	##
+	## Build Environment
+	&& apk add --update \
+               --no-cache \
+               --virtual .build-deps \
+               alpine-sdk \
+               libidn-dev \
+               linux-headers \
+               lua5.2-busted \
+               lua5.2-dev \
+               openssl-dev \
 	&& ln -s /usr/bin/busted-5.2 /usr/local/bin/busted \
-    && hg clone https://hg.prosody.im/0.11 /prosody-src \
-    && cd /prosody-src \
+	##
+	## Prosody
+	&& curl --silent --output /prosody-trunk.tar.gz "https://hg.prosody.im/trunk/archive/0.11.tar.gz" \
+	&& mkdir /prosody-src \
+	&& cd /prosody-src \
+	&& tar xzf /prosody-trunk.tar.gz --strip 1 \
     && ./configure --no-example-certs \
-        --cflags='-fPIC -Wall -std=c99 -pedantic -DWITHOUT_MALLINFO' \
+                   --cflags='-fPIC -Wall -std=c99 -pedantic -DWITHOUT_MALLINFO' \
     && make \
     && make test \
     && make install \
     && cd / \
+	##
+	## Prosody Community Modules
+    && curl --silent --output /prosody-modules.tar.gz "https://hg.prosody.im/prosody-modules/archive/default.tar.gz" \
+    && mkdir /usr/local/lib/prosody-community-modules \
+	&& cd /usr/local/lib/prosody-community-modules \
+	&& tar xzf /prosody-modules.tar.gz --strip 1 \
+	##
+	## Cleanup
     && rm -rf /prosody-src \
-    && hg clone https://hg.prosody.im/prosody-modules/ /usr/local/lib/prosody-community-modules \
-    && rm -rf /usr/local/lib/prosody-community-modules/.hg \
-    && rm -rf /usr/local/lib/prosody-community-modules/.hgtags \
+    && rm -f /prosody-src.tar.gz \
+    && rm -f /prosody-modules.tar.gz \
 	&& rm -f /usr/local/bin/busted \
     && apk del .build-deps
 
