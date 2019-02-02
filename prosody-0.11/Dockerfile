@@ -1,11 +1,11 @@
-FROM alpine:3.8
+FROM alpine:edge
 
 LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
 
 ## Install Packages
 RUN apk add --no-cache \
 			--update \
-            libcrypto1.0 \
+            libcrypto1.1 \
 			libidn \
 			lua5.2 \
 			lua5.2-expat \

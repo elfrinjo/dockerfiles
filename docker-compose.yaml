@@ -11,10 +11,6 @@ services:
     build: ./prosody-0.11
     image: elfrinjo/prosody-0.11:latest
 
-  tinywebdav:
-    build: ./tinywebdav
-    image: elfrinjo/tinywebdav:latest
-
   torrelay:
     build: ./torrelay
     image: elfrinjo/torrelay:latest
