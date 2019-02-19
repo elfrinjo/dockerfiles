@@ -5,13 +5,15 @@ LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
 ## Install Packages
 RUN apk add --no-cache \
 			--update \
+			ca-certificates \
             libcrypto1.1 \
 			libidn \
 			lua5.2 \
 			lua5.2-expat \
 			lua5.2-filesystem \
 			lua5.2-sec \
-			lua5.2-socket
+			lua5.2-socket \
+			openssl
 
 ## Install build envirnoment, build and remove unneeded things
 ## This is done in one step to reduce image size
@@ -46,6 +48,8 @@ RUN set -x \
     && mkdir /usr/local/lib/prosody-community-modules \
 	&& cd /usr/local/lib/prosody-community-modules \
 	&& tar xzf /prosody-modules.tar.gz --strip 1 \
+	&& cd mod_admin_web/admin_web \
+	&& ./get_deps.sh \
 	##
 	## Cleanup
     && rm -rf /prosody-src \
