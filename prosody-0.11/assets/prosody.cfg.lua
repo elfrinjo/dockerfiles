@@ -61,7 +61,7 @@ modules_enabled = {
 		"register"; -- Allow users to register on this server using a client and change passwords
 
 	-- Admin interfaces
-		--"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
+		"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
 		--"admin_telnet"; -- Opens telnet console interface on localhost port 5582
 
 	-- HTTP modules
@@ -79,15 +79,17 @@ modules_enabled = {
 
 	-- Community Modules
 		"admin_blocklist";
+		"admin_web";
         "blocking";
         "carbons";
         "cloud_notify";
         "csi";
+        "http_upload";
         "mam";
+		"password_reset";
         "privacy_lists";
         "smacks";
         "smacks_offline";
-        "http_upload";
 };
 
 -- These modules are auto-loaded, but should you want
@@ -197,10 +199,8 @@ Component "conference.example.com" "muc"
 	modules_enabled = {
 		"muc_mam";
 		"remote_roster";
+		"vcard_muc";
 	}
-
--- Administration by XMPP messages
-Component "con@example.com" "admin_message"
 
 -- Set up a bytestream proxy for server-proxied file transfers:
 Component "proxy65.example.com" "proxy65"
