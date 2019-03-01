@@ -33,8 +33,8 @@ RUN apk add --update --no-cache \
 ## Configure apache
 COPY assets/php.ini /etc/php7/php.ini
 COPY assets/httpd.conf /etc/apache2/httpd.conf
-RUN mkdir /run/apache2 \
-    && chown apache:apache /run/apache2
+RUN  chown apache:apache /run/apache2
+
 
 ## Some customization for running websites
 RUN chown -R apache:apache /var/www/localhost\
