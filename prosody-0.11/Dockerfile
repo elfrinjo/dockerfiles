@@ -53,7 +53,7 @@ RUN set -x \
 	##
 	## Cleanup
     && rm -rf /prosody-src \
-    && rm -f /prosody-src.tar.gz \
+    && rm -f /prosody-trunk.tar.gz \
     && rm -f /prosody-modules.tar.gz \
 	&& rm -f /usr/local/bin/busted \
     && apk del .build-deps
