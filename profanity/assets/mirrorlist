@@ -1,0 +1,4 @@
+Server = http://ftp.gwdg.de/pub/linux/archlinux/$repo/os/$arch
+Server = http://ftp.fau.de/archlinux/$repo/os/$arch
+Server = https://ftp.fau.de/archlinux/$repo/os/$arch
+

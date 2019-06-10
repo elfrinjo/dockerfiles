@@ -15,4 +15,7 @@ services:
     build: ./torrelay
     image: elfrinjo/torrelay:latest
 
+  profanity:
+    build: ./profanity
+    image: elfrinjo/profanity:latest
 
