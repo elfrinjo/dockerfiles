@@ -5,8 +5,8 @@ OMEMO is available,
 
 ## Usage
 ```console
-# docker run -ti --rm \
-    -v ~/.local/share/profanity:/home/user/.local/share/profanity
-    -v ~/.config/profanity/:/home/user/.config/profanity
+# sudo docker run -ti --rm \
+    -v ~/.local/share/profanity:/home/user/.local/share/profanity \
+    -v ~/.config/profanity/:/home/user/.config/profanity \
     elfrinjo/profanity:latest
 ```
