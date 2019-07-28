@@ -7,6 +7,10 @@ services:
     build: ./aap
     image: elfrinjo/aap:latest
 
+  feed-to-muc:
+    build: ./feed-to-muc
+    image: elfrinjo/feed-to-muc:latest
+
   prosody-0.11:
     build: ./prosody-0.11
     image: elfrinjo/prosody-0.11:latest
