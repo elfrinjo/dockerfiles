@@ -9,26 +9,32 @@ COPY assets/mirrorlist /etc/pacman.d/mirrorlist
 RUN pacman --sync --refresh --needed --noconfirm \
 		base-devel \
 		git \
-		go \
 	&& useradd --create-home user
 COPY assets/sudoers /etc/sudoers
 
-## Switch to the new user and install yay from aur
+## Switch to the new user and install yaourt from aur
 USER user
-RUN cd /home/user \
-	&& git clone https://aur.archlinux.org/yay.git \
-	&& cd yay \
-	&& makepkg --syncdeps --install --noconfirm \
-	&& cd /home/user \
-	&& rm -rf yay
-
-## Install profanity-git from aur
-RUN cd /home/user \
-	&& yay --sync --noconfirm profanity-git
-
-## Cleanup
-RUN sudo pacman --noconfirm -Rcns go yay texinfo \
-	&& sudo pacman --noconfirm -Rsn $(pacman -Qqdt)
+RUN cd /tmp \
+	## Install package-query, a prereq for yaourt
+	&& curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/package-query.tar.gz \
+	&& tar -xvzf package-query.tar.gz \
+	&& cd package-query \
+	&& makepkg -si --noconfirm \
+	&& cd /tmp \
+	&& rm -rf package-query.tar.gz package-query \
+	## Install yaourt
+	&& curl -O https://aur.archlinux.org/cgit/aur.git/snapshot/yaourt.tar.gz \
+	&& tar -xvzf yaourt.tar.gz \
+	&& cd yaourt \
+	&& makepkg -si --noconfirm \
+	&& cd /tmp \
+	&& rm -rf yaourt.tar.gz yaourt \
+	## Install profanity
+    && cd /home/user \
+	&& yaourt --sync --noconfirm profanity-git \
+	## Cleanup
+	&& sudo pacman --noconfirm -Rcns yaourt package-query git \
+ 	&& sudo pacman --noconfirm -Rsn $(pacman -Qqdt)
 
 WORKDIR /home/user
 CMD ["/usr/sbin/profanity"]
