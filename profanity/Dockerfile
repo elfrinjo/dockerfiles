@@ -31,10 +31,14 @@ RUN cd /tmp \
 	&& rm -rf yaourt.tar.gz yaourt \
 	## Install profanity
     && cd /home/user \
-	&& yaourt --sync --noconfirm profanity-git \
+	&& yaourt --sync --noconfirm profanity-git
 	## Cleanup
-	&& sudo pacman --noconfirm -Rcns yaourt package-query git \
- 	&& sudo pacman --noconfirm -Rsn $(pacman -Qqdt)
+RUN  sudo pacman --noconfirm -Rcns yaourt package-query git \
+	&& pacman -Qgq base > /tmp/pkg_base \
+	&& pacman -Qgq base-devel > /tmp/pkg_base-devel \
+	&& grep -f /tmp/pkg_base -v /tmp/pkg_base-devel > /tmp/pkg_devel 
+	#&& sudo pacman --noconfirm -Rsu base-devel \
+ 	#&& sudo pacman --noconfirm -Rsn $(pacman -Qqdt)
 
 WORKDIR /home/user
 CMD ["/usr/sbin/profanity"]
