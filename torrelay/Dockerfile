@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:edge
 LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
 
 RUN apk --update --no-cache add tor
