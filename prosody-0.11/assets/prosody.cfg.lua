@@ -89,7 +89,6 @@ modules_enabled = {
 		"password_reset";
         "privacy_lists";
         "smacks";
-        "smacks_offline";
 };
 
 -- These modules are auto-loaded, but should you want
