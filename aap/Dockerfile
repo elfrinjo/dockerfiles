@@ -41,6 +41,7 @@ RUN chown -R apache:apache /var/www/localhost\
     && sed -i 's+apache:x:100:101:apache:/var/www:/sbin/nologin+apache:x:100:101:apache:/var/www/localhost:/sbin/nologin+' /etc/passwd
 
 USER apache
+ENV SERVERADMINMAIL=webmaster@example.com
 
 VOLUME /var/www/localhost
 EXPOSE 8080

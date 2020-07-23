@@ -27,6 +27,7 @@ USER apache
 VOLUME /var/www
 WORKDIR /var/www
 EXPOSE 8080
+ENV SERVERADMINMAIL=webmaster@example.com
 CMD httpd -D FOREGROUND
 
 
