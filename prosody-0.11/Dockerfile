@@ -6,6 +6,7 @@ LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
 RUN apk add --no-cache \
 			--update \
 			ca-certificates \
+			curl \
             libcrypto1.1 \
 			libidn \
 			lua5.2 \
@@ -58,8 +59,24 @@ RUN set -x \
 	&& rm -f /usr/local/bin/busted \
     && apk del .build-deps
 
+## Some static files (e.g. for the invite module)
+RUN	mkdir /usr/local/var/lib/www \
+    && mkdir -p /usr/local/var/lib/javascript/bootstrap4/css \
+	&& curl --silent --output /usr/local/var/lib/javascript/bootstrap4/css/bootstrap.min.css \
+	                          "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" \
+    && mkdir -p /usr/local/var/lib/javascript/bootstrap4/js \
+	&& curl --silent --output /usr/local/var/lib/javascript/bootstrap4/js/bootstrap.min.js \
+	                          "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" \
+    && mkdir -p /usr/local/var/lib/javascript/jquery \
+	&& curl --silent --output /usr/local/var/lib/javascript/jquery/jquery.min.js \
+	                          "https://code.jquery.com/jquery-3.5.1.min.js"
+
+## Add Default config
 COPY ./assets/prosody.cfg.lua /usr/local/etc/prosody/prosody.cfg.lua
 RUN chown daemon:daemon /usr/local/var/lib/prosody
+
+
+
 
 EXPOSE 5000 5222 5269 5347 5280 5281
 VOLUME ["/usr/local/etc/prosody", "/usr/local/var/lib/prosody"]

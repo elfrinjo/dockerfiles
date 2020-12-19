@@ -65,8 +65,9 @@ modules_enabled = {
 		--"admin_telnet"; -- Opens telnet console interface on localhost port 5582
 
 	-- HTTP modules
+		"http_files"; -- Serve static files from a directory over HTTP
+		"http_libjs"; -- Serve static files from a directory over HTTP
 		--"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
-		--"http_files"; -- Serve static files from a directory over HTTP
 
 	-- Other specific functionality
 		"watchregistrations"; -- Alert admins of registrations
@@ -182,6 +183,9 @@ muc_log_by_default = true; -- Enable logging by default (can be disabled in room
 muc_log_all_rooms = false; -- set to true to force logging of all rooms
 max_history_messages = 20;
 
+-- Common htp server for static files
+http_files_dir = "/usr/local/var/lib/www";
+libjs_path = "/usr/local/var/lib/javascript";
 
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
