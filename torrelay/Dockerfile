@@ -1,5 +1,5 @@
 FROM alpine:edge
-LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
+LABEL maintainer "J. Elfring <code@elfring.ms>
 
 RUN apk --update --no-cache add tor
 

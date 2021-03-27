@@ -1,5 +1,5 @@
 FROM alpine:latest
-LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
+LABEL maintainer "J. Elfring <code@elfring.ms>"
 
 ## Install prereqs
 RUN apk add --update --no-cache \

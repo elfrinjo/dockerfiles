@@ -1,6 +1,6 @@
 FROM alpine:edge
 
-LABEL maintainer "J. Elfring <devops@elfrinjo.de>"
+LABEL maintainer "J. Elfring <code@elfring.ms>
 
 ## Install Packages
 RUN apk add --no-cache \
