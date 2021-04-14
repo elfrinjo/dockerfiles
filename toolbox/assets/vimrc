@@ -1,100 +1,102 @@
-" Basics
+"
+" Install plugins
 "
 set nocompatible         " be iMproved, required
-let mapleader = ","
-let g:mapleader = ","
-let maplocalleader = ";"
 
+filetype plugin indent on
+syntax on
+syntax sync minlines=256
+
+"
 " Settings
 "
-set noerrorbells                " No beeps
-set number                      " Show line numbers
-set backspace=indent,eol,start  " Makes backspace key more powerful.
-set showcmd                     " Show me what I'm typing
-set noswapfile                  " Don't use swapfile
-set nobackup                    " Don't create annoying backup files
-set nowritebackup
-set splitright                  " Split vertical windows right to the current windows
-set splitbelow                  " Split horizontal windows below to the current windows
-set encoding=utf-8              " Set default encoding to UTF-8
-set autowrite                   " Automatically save before :next, :make etc.
+set autoindent
 set autoread                    " Automatically reread changed files without asking me anything
-set laststatus=2
-set hidden
-set ruler                       " Show the cursor position all the time
+set autowrite                   " Automatically save before :next, :make etc.
+set backspace=indent,eol,start  " Makes backspace key more powerful.
+set complete=.,w,b,u,t
+set completeopt=longest,menuone
+set display+=lastline
+set encoding=utf-8              " Set default encoding to UTF-8
 set fileformats=unix,dos,mac    " Prefer Unix over Windows over OS 9 formats
-
-set showmatch                   " Show matching brackets by flickering
-set showmode
-
-" Search Options
-set incsearch
+set hidden
+set history=500
 set hlsearch
 set ignorecase
-set smartcase
-" Visual mode pressing * or # searches for the current selection
-vnoremap <silent> # :call VisualSelection('b')<CR>
-" Center search results
-nnoremap n nzzzv
-nnoremap N Nzzzv
-nnoremap <leader><space> :nohlsearch<CR>
-
-set ttyfast
+set incsearch
+set laststatus=2
 set lazyredraw
+set nobackup                    " Don't create annoying backup files
 set nocursorcolumn
 set nocursorline
-set synmaxcol=300
+set noerrorbells                " No beeps
+set showmode                  " We show the mode with airlien or lightline
+set noswapfile                  " Don't use swapfile
+set nowritebackup
+set nrformats-=octal
+set number                      " Show line numbers
 set re=1
-
-" open help vertically
-command! -nargs=* -complete=help Help vertical belowright help <args>
+set ruler                       " Show the cursor position all the time
+set scrolloff=7
+set showcmd                     " Show me what I'm typing
+set showmatch                   " Show matching brackets by flickering
+set sidescrolloff=7
+set smartcase
+set splitbelow                  " Split horizontal windows below to the current windows
+set splitright                  " Split vertical windows right to the current windows
+set synmaxcol=300
+set tabpagemax=50
+set ttyfast
 
 " Make Vim to handle long lines nicely.
 set wrap
 set textwidth=79
 set formatoptions=qrn1
 
-set complete-=i
-
-set nrformats-=octal
-
 " Time out on key codes but not mappings.
-" Basically this makes terminal Vim work sanely.
 set notimeout
 set ttimeout
 set ttimeoutlen=10
+
+if has('gui_running')
+  "set transparency=3
+  set regexpengine=1        " fix js regex syntax
+endif
+
+let mapleader = ","
+
+" dont save .netrwhist history
+let g:netrw_dirhistmax=0
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
+" open help vertically
+command! -nargs=* -complete=help Help vertical belowright help <args>
 
 " Different Cursorshapes for the modes
 let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
-" Better Completion
-set complete=.,w,b,u,t
-set completeopt=longest,menuone
+" ==================== Remap Keys ====================
+" Remaps % to tab so navigate to matching brackets
+nnoremap <tab> %
+vnoremap <tab> %
 
-set history=500
-set tabpagemax=50
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
 
-set scrolloff=7
-set sidescrolloff=7
-set display+=lastline
+" Center, kill hl
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <space> zz
 
 " CTRL-U in insert mode deletes a lot.	Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-
-syntax on
-syntax sync minlines=256
-filetype plugin indent on
-
-colorscheme elflord
-
-if has('gui_running')
-  "set transparency=3
-  "fix js regex syntax
-  set regexpengine=1
-endif
 
 " Toggle line numbers and rulers
 nmap <leader>ll :set number!<cr>
@@ -112,10 +114,7 @@ map <C-up> <C-W>k
 map <C-left> <C-W>h
 map <C-right> <C-W>l
 
-" Center the screen
-nnoremap <space> zz
-
-" Move up and down on splitted lines (on small width screens)
+" Move up and down on split lines
 map <Up> gk
 map <Down> gj
 map k gk
@@ -135,44 +134,35 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " Do not show stupid q: window
 map q: :q
 
-" dont save .netrwhist history
-let g:netrw_dirhistmax=0
-
-" Allow saving of files as sudo
-cmap w!! w !sudo tee > /dev/null %
-
 " Paste Mode
 set pastetoggle=<F2>
 
-" ----------------------------------------- "
-" File Type settings 	          		    		"
-" ----------------------------------------- "
+" ==================== File Type settings ====================
 set tabstop=4
-set shiftwidth=4
 set softtabstop=4
-set autoindent
-set smarttab
-set expandtab
+set shiftwidth=4
+set noexpandtab
 set shiftround
+set smarttab
 
-au BufNewFile,BufRead *.vim setlocal noet ts=4 sw=4 sts=4
-au BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4 sts=4
-au BufNewFile,BufRead *.md setlocal  noet ts=4 sw=4 sts=4
-au BufNewFile,BufRead *.json setlocal  et ts=2 sw=2 sts=2
-au BufNewFile,BufRead *.go setlocal  noet ts=4 sw=4 sts=4
-au BufNewFile,BufRead *.md setlocal    et ts=4 sw=4 sts=4
-au BufNewFile,BufRead *.lua setlocal noet ts=4 sw=4 sts=4
-au BufNewFile,BufRead *.py setlocal    et ts=4 sw=4 sts=4
-au BufNewFile,BufRead *.yml,*.yaml setlocal et ts=2 sw=2 sts=2
+au BufNewFile,BufRead *.vim        setlocal noet ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.txt        setlocal noet ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.md         setlocal noet ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.json       setlocal   et ts=2 sw=2 sts=2
+au BufNewFile,BufRead *.go         setlocal noet ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.md         setlocal   et ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.lua        setlocal noet ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.py         setlocal   et ts=4 sw=4 sts=4
+au BufNewFile,BufRead *.yml,*.yaml setlocal   et ts=2 sw=2 sts=2
+au BufNewFile,BufRead *.htm,*.html setlocal noet ts=4 sw=4 sts=4
 
-au FileType nginx setlocal noet ts=4 sw=4 sts=4
-au FileType dockerfile setlocal et ts=2 sw=2 sts=2
-au FileType fstab,systemd set noet
-au FileType gitconfig,sh,toml set noet
+au FileType dockerfile             setlocal   et ts=2 sw=2 sts=2
+au FileType nginx                  setlocal noet ts=4 sw=4 sts=4
+au FileType fstab,systemd          set      noet
+au FileType gitconfig,sh,toml      set      noet
 
 " ==================== Wildmenu ====================
 set wildmenu
-" set wildmode=list:longest
 set wildmode=list:full
 
 set wildignore+=.hg,.git,.svn                    " Version control
