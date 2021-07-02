@@ -27,7 +27,6 @@ RUN apk add --update --no-cache --repository http://dl-3.alpinelinux.org/alpine/
 			kubectl
 
 ADD assets/profile.d/* /etc/profile.d/
-RUN mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh
 COPY assets/vimrc /etc/vim/vimrc
 
 WORKDIR /root

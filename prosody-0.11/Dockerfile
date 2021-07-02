@@ -33,7 +33,7 @@ RUN set -x \
 	&& ln -s /usr/bin/busted-5.2 /usr/local/bin/busted \
 	##
 	## Prosody
-	&& curl --silent --output /prosody-trunk.tar.gz "https://hg.prosody.im/trunk/archive/0.11.tar.gz" \
+	&& curl --output /prosody-trunk.tar.gz "https://hg.prosody.im/trunk/archive/0.11.tar.gz" \
 	&& mkdir /prosody-src \
 	&& cd /prosody-src \
 	&& tar xzf /prosody-trunk.tar.gz --strip 1 \
